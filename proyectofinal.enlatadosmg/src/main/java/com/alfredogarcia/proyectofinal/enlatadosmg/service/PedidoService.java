@@ -23,7 +23,7 @@ public class PedidoService {
 
     @Autowired
     public PedidoService(ClienteService clienteService, RepartidorService repartidorService,
-                         VehiculoService vehiculoService, AlmacenService almacenService) {
+            VehiculoService vehiculoService, AlmacenService almacenService) {
         this.pedidos = new ListaEnlazada<>();
         this.contadorPedidos = 1;
         this.clienteService = clienteService;
@@ -33,7 +33,7 @@ public class PedidoService {
     }
 
     public Pedido crearPedido(CrearPedidoRequest req) {
-        // 1. Validaciones obligatorias
+        // 1. Validaciones
         if (req.getCantidadCajas() <= 0) {
             throw new RuntimeException("La cantidad de cajas debe ser mayor que cero.");
         }
@@ -44,8 +44,8 @@ public class PedidoService {
         }
 
         if (almacenService.obtenerCantidad() < req.getCantidadCajas()) {
-            throw new RuntimeException("No hay suficientes cajas en el almacén. Disponibles: " 
-                                        + almacenService.obtenerCantidad());
+            throw new RuntimeException("No hay suficientes cajas en el almacén. Disponibles: "
+                    + almacenService.obtenerCantidad());
         }
 
         if (repartidorService.obtenerTodos().isEmpty()) {
@@ -70,17 +70,16 @@ public class PedidoService {
         // 4. Crear el pedido
         String fecha = LocalDateTime.now().format(FORMATTER);
         Pedido nuevoPedido = new Pedido(
-            contadorPedidos++,
-            req.getDepartamentoOrigen(),
-            req.getDepartamentoDestino(),
-            fecha,
-            cliente,
-            repartidor,
-            vehiculo,
-            cajasPedido,
-            req.getCantidadCajas(),
-            EstadoPedido.PENDIENTE
-        );
+                contadorPedidos++,
+                req.getDepartamentoOrigen(),
+                req.getDepartamentoDestino(),
+                fecha,
+                cliente,
+                repartidor,
+                vehiculo,
+                cajasPedido,
+                req.getCantidadCajas(),
+                EstadoPedido.PENDIENTE);
 
         // 5. Guardar pedido en la lista enlazada
         pedidos.insertarFinal(nuevoPedido);

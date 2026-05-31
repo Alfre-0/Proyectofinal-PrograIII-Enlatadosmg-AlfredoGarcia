@@ -55,7 +55,7 @@ public class ClienteServiceTest {
 
     @Test
     public void testInsertarClienteDuplicado() {
-        // Valida que dé error al insertar cliente con DPI duplicado
+        // Valida que de error al insertar cliente con DPI duplicado
         Cliente c1 = new Cliente("123", "Juan", "Pérez", "55554444", "Gua");
         Cliente c2 = new Cliente("123", "Carlos", "Pérez", "55554444", "Gua");
 

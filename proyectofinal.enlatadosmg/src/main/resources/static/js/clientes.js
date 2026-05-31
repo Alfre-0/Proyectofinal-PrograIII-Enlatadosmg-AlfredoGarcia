@@ -34,7 +34,7 @@ async function cargarClientes() {
             `;
             tbody.appendChild(tr);
         });
-    } catch(e) {
+    } catch (e) {
         console.error('Error cargando clientes:', e);
     }
 }
@@ -43,7 +43,7 @@ function inicializarEventos() {
     // Formulario de creación/edición
     document.getElementById('cliente-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const dpi = document.getElementById('dpi').value;
         const nombre = document.getElementById('nombre').value;
         const apellidos = document.getElementById('apellidos').value;
@@ -65,7 +65,7 @@ function inicializarEventos() {
                 limpiarFormulario();
             }
             cargarClientes();
-        } catch(err) {
+        } catch (err) {
             // El error lo maneja api.js automáticamente
         }
     });
@@ -83,7 +83,7 @@ function inicializarEventos() {
         }
     });
 
-    // Soporte para arrastrar y soltar archivos (Drag and Drop)
+    // Soporte para arrastrar y soltar archivos
     uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
         uploadArea.style.borderColor = 'var(--accent-purple)';
@@ -111,7 +111,7 @@ function procesarCSV(file) {
             await api.postCarga('/clientes/carga', text);
             showToast('Carga masiva finalizada con éxito.', 'success');
             cargarClientes();
-        } catch(err) {
+        } catch (err) {
             // Manejado
         }
     };
@@ -120,7 +120,7 @@ function procesarCSV(file) {
 
 function editarCliente(dpi, nombre, apellidos, telefono, direccion) {
     editandoDpi = dpi;
-    
+
     document.getElementById('dpi').value = dpi;
     // Bloqueamos el campo DPI en modo edición para evitar que cambie la llave primaria del cliente.
     // Nuestra API permite el cambio (elimina e inserta), pero por experiencia de usuario es mejor dejarlo editable.
@@ -156,6 +156,6 @@ async function eliminarCliente(dpi) {
             await api.delete(`/clientes/${dpi}`);
             showToast('Cliente eliminado del árbol AVL.', 'success');
             cargarClientes();
-        } catch(e) {}
+        } catch (e) { }
     }
 }
