@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enlatados MG - Repartidores</title>
+    <!-- Estilos de Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Estilos propios del proyecto -->
+    <link href="/css/estilos.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Barra de navegación superior -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/dashboard.html">
+                <span>Proyecto Enlatados MG - Alfredo García</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" id="nav-dashboard" href="/dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" id="nav-clientes" href="/clientes.html">Clientes</a></li>
+                    <li class="nav-item"><a class="nav-link active" id="nav-repartidores" href="/repartidores.html">Repartidores</a></li>
+                    <li class="nav-item"><a class="nav-link" id="nav-vehiculos" href="/vehiculos.html">Vehículos</a></li>
+                    <li class="nav-item"><a class="nav-link" id="nav-almacen" href="/almacen.html">Almacén</a></li>
+                    <li class="nav-item"><a class="nav-link" id="nav-pedidos" href="/pedidos.html">Pedidos</a></li>
+                    <li class="nav-item"><a class="nav-link" id="nav-reportes" href="/reportes.html">Reportes</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <span class="text-secondary small me-3" id="navbar-user-name">Cargando usuario...</span>
+                    <button class="btn btn-outline-danger btn-sm" onclick="logout()">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal de la página -->
+    <div class="container animate-fade-in mb-5">
+        <div class="row g-4">
+            
+            <!-- Panel izquierdo: Formulario de Registro y Carga Masiva CSV -->
+            <div class="col-lg-4">
+                <div class="glass-panel p-4 mb-4">
+                    <h4 class="fw-bold mb-3" id="form-title">Registrar Repartidor</h4>
+                    <form id="repartidor-form">
+                        <div class="mb-3">
+                            <label for="dpi" class="form-label text-secondary small">DPI (CUI)</label>
+                            <input type="text" class="form-control" id="dpi" required placeholder="Ej. 1234567890101">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label text-secondary small">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" required placeholder="Ej. Carlos">
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellidos" class="form-label text-secondary small">Apellidos</label>
+                            <input type="text" class="form-control" id="apellidos" required placeholder="Ej. Gómez">
+                        </div>
+                        <div class="mb-3">
+                            <label for="licencia" class="form-label text-secondary small">Tipo Licencia</label>
+                            <select class="form-select" id="licencia" required>
+                                <option value="" disabled selected>Selecciona tipo...</option>
+                                <option value="A">Clase A (Profesional)</option>
+                                <option value="B">Clase B (Comercial)</option>
+                                <option value="C">Clase C (Particular)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label text-secondary small">Teléfono</label>
+                            <input type="text" class="form-control" id="telefono" required placeholder="Ej. 55554321">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="btn-submit">Guardar Repartidor</button>
+                        <button type="button" class="btn btn-secondary w-100 mt-2 d-none" id="btn-cancel" onclick="cancelarEdicion()">Cancelar Edición</button>
+                    </form>
+                </div>
+
+                <div class="glass-panel p-4">
+                    <h4 class="fw-bold mb-3">Carga Masiva (CSV)</h4>
+                    <p class="text-secondary small">Format: DPI;Nombre;Apellido;Licencia;Teléfono</p>
+                    <div class="upload-area" id="upload-area">
+                        <span class="text-secondary small">Arrastra el archivo aquí o haz clic para subir</span>
+                        <input type="file" id="csv-file" accept=".csv" class="d-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel derecho: Listado Interactivo de Repartidores -->
+            <div class="col-lg-8">
+                <div class="glass-panel p-4">
+                    <h4 class="fw-bold mb-3">Cola de Repartidores Disponibles (FIFO)</h4>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Orden Cola</th>
+                                    <th>DPI</th>
+                                    <th>Nombre Completo</th>
+                                    <th>Licencia</th>
+                                    <th>Teléfono</th>
+                                    <th class="text-end">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-repartidores">
+                                <!-- Filas generadas dinámicamente mediante JavaScript -->
+                                <tr>
+                                    <td colspan="6" class="text-center text-secondary py-4">No hay repartidores en la cola.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap 5 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts de la aplicación -->
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/repartidores.js"></script>
+</body>
+</html>

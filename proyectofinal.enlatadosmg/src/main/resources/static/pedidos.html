@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enlatados MG - Pedidos</title>
+    <!-- Estilos de Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Estilos propios del proyecto -->
+    <link href="/css/estilos.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Barra de navegación superior -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/dashboard.html">
+                <span>Proyecto Enlatados MG - Alfredo García</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" id="nav-dashboard" href="/dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" id="nav-clientes" href="/clientes.html">Clientes</a></li>
+                    <li class="nav-item"><a class="nav-link" id="nav-repartidores" href="/repartidores.html">Repartidores</a></li>
+                    <li class="nav-item"><a class="nav-link" id="nav-vehiculos" href="/vehiculos.html">Vehículos</a></li>
+                    <li class="nav-item"><a class="nav-link" id="nav-almacen" href="/almacen.html">Almacén</a></li>
+                    <li class="nav-item"><a class="nav-link active" id="nav-pedidos" href="/pedidos.html">Pedidos</a></li>
+                    <li class="nav-item"><a class="nav-link" id="nav-reportes" href="/reportes.html">Reportes</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <span class="text-secondary small me-3" id="navbar-user-name">Cargando usuario...</span>
+                    <button class="btn btn-outline-danger btn-sm" onclick="logout()">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal de la página -->
+    <div class="container animate-fade-in mb-5">
+        <div class="row g-4">
+            
+            <!-- Panel izquierdo: Formulario de Creación de Pedidos -->
+            <div class="col-lg-4">
+                <div class="glass-panel p-4 mb-4">
+                    <h4 class="fw-bold mb-3">Crear Nuevo Pedido</h4>
+                    <form id="pedido-form">
+                        <div class="mb-3">
+                            <label for="cliente-select" class="form-label text-secondary small">Seleccionar Cliente (AVL)</label>
+                            <select class="form-select" id="cliente-select" required>
+                                <option value="" disabled selected>Cargando clientes...</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="departamento-origen" class="form-label text-secondary small">Departamento de Origen</label>
+                            <select class="form-select" id="departamento-origen" required>
+                                <option value="Guatemala" selected>Guatemala</option>
+                                <option value="Alta Verapaz">Alta Verapaz</option>
+                                <option value="Baja Verapaz">Baja Verapaz</option>
+                                <option value="Chimaltenango">Chimaltenango</option>
+                                <option value="Chiquimula">Chiquimula</option>
+                                <option value="El Progreso">El Progreso</option>
+                                <option value="Escuintla">Escuintla</option>
+                                <option value="Huehuetenango">Huehuetenango</option>
+                                <option value="Izabal">Izabal</option>
+                                <option value="Jalapa">Jalapa</option>
+                                <option value="Jutiapa">Jutiapa</option>
+                                <option value="Petén">Petén</option>
+                                <option value="Quetzaltenango">Quetzaltenango</option>
+                                <option value="Quiché">Quiché</option>
+                                <option value="Retalhuleu">Retalhuleu</option>
+                                <option value="Sacatepéquez">Sacatepéquez</option>
+                                <option value="San Marcos">San Marcos</option>
+                                <option value="Santa Rosa">Santa Rosa</option>
+                                <option value="Sololá">Sololá</option>
+                                <option value="Suchitepéquez">Suchitepéquez</option>
+                                <option value="Totonicapán">Totonicapán</option>
+                                <option value="Zacapa">Zacapa</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="departamento-destino" class="form-label text-secondary small">Departamento de Destino</label>
+                            <select class="form-select" id="departamento-destino" required>
+                                <option value="" disabled selected>Selecciona destino...</option>
+                                <option value="Guatemala">Guatemala</option>
+                                <option value="Alta Verapaz">Alta Verapaz</option>
+                                <option value="Baja Verapaz">Baja Verapaz</option>
+                                <option value="Chimaltenango">Chimaltenango</option>
+                                <option value="Chiquimula">Chiquimula</option>
+                                <option value="El Progreso">El Progreso</option>
+                                <option value="Escuintla">Escuintla</option>
+                                <option value="Huehuetenango">Huehuetenango</option>
+                                <option value="Izabal">Izabal</option>
+                                <option value="Jalapa">Jalapa</option>
+                                <option value="Jutiapa">Jutiapa</option>
+                                <option value="Petén">Petén</option>
+                                <option value="Quetzaltenango">Quetzaltenango</option>
+                                <option value="Quiché">Quiché</option>
+                                <option value="Retalhuleu">Retalhuleu</option>
+                                <option value="Sacatepéquez">Sacatepéquez</option>
+                                <option value="San Marcos">San Marcos</option>
+                                <option value="Santa Rosa">Santa Rosa</option>
+                                <option value="Sololá">Sololá</option>
+                                <option value="Suchitepéquez">Suchitepéquez</option>
+                                <option value="Totonicapán">Totonicapán</option>
+                                <option value="Zacapa">Zacapa</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cantidad-cajas-pedido" class="form-label text-secondary small">Cantidad de Cajas</label>
+                            <input type="number" class="form-control" id="cantidad-cajas-pedido" required placeholder="Ej. 5" min="1">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Crear Pedido</button>
+                    </form>
+                </div>
+
+                <!-- Tarjeta informativa del estado de los recursos estructurales -->
+                <div class="glass-panel p-4">
+                    <h5 class="fw-bold mb-3">Recursos en Cola (FIFO) y Almacén</h5>
+                    <ul class="list-group list-group-flush bg-transparent">
+                        <li class="list-group-item bg-transparent border-secondary text-secondary d-flex justify-content-between px-0">
+                            <span>Repartidores Disponibles:</span>
+                            <span class="text-white" id="status-repartidores">-</span>
+                        </li>
+                        <li class="list-group-item bg-transparent border-secondary text-secondary d-flex justify-content-between px-0">
+                            <span>Vehículos Disponibles:</span>
+                            <span class="text-white" id="status-vehiculos">-</span>
+                        </li>
+                        <li class="list-group-item bg-transparent border-0 text-secondary d-flex justify-content-between px-0">
+                            <span>Cajas en Almacén:</span>
+                            <span class="text-white" id="status-almacen">-</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Panel derecho: Lista de Pedidos -->
+            <div class="col-lg-8">
+                <div class="glass-panel p-4">
+                    <h4 class="fw-bold mb-3">Listado de Pedidos (Lista Enlazada)</h4>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Pedido #</th>
+                                    <th>Cliente</th>
+                                    <th>Ruta</th>
+                                    <th>Cajas</th>
+                                    <th>Estado</th>
+                                    <th class="text-end">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-pedidos">
+                                <tr>
+                                    <td colspan="6" class="text-center text-secondary py-4">No hay pedidos registrados en el sistema.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Ventana modal con detalles del pedido -->
+    <div class="modal fade" id="modal-detalle-pedido" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 glass-panel" style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(24px);">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title fw-bold text-white" id="modal-titulo">Detalles del Pedido</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-white">
+                    <div class="row g-4">
+                        
+                        <!-- Sección de Información del Cliente -->
+                        <div class="col-md-6">
+                            <div class="glass-card h-100">
+                                <h6 class="text-secondary small uppercase fw-bold mb-2">Cliente Asociado</h6>
+                                <p class="mb-1" id="det-cliente-nombre">-</p>
+                                <p class="mb-1 text-secondary small">DPI: <code class="text-info" id="det-cliente-dpi">-</code></p>
+                                <p class="mb-1 text-secondary small">Teléfono: <span id="det-cliente-telefono">-</span></p>
+                                <p class="mb-0 text-secondary small">Dirección: <span id="det-cliente-direccion">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Sección de Información Logística -->
+                        <div class="col-md-6">
+                            <div class="glass-card h-100">
+                                <h6 class="text-secondary small uppercase fw-bold mb-2">Logística y Entrega</h6>
+                                <p class="mb-1">Repartidor: <strong id="det-repartidor-nombre">-</strong></p>
+                                <p class="mb-1 text-secondary small">Licencia: <span class="badge bg-primary" id="det-repartidor-licencia">-</span></p>
+                                <p class="mb-1">Vehículo: <strong id="det-vehiculo-marca">-</strong></p>
+                                <p class="mb-0 text-secondary small">Placa: <code class="text-info" id="det-vehiculo-placa">-</code> | Transmisión: <span id="det-vehiculo-trans">-</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Sección de Información de las Cajas -->
+                        <div class="col-12">
+                            <div class="glass-card">
+                                <h6 class="text-secondary small uppercase fw-bold mb-3">Cajas Entregadas en este Pedido (<span id="det-cajas-cantidad">0</span>)</h6>
+                                <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                                    <table class="table table-sm table-custom mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Correlativo</th>
+                                                <th>Fecha de Ingreso al Almacén</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="det-cajas-tabla">
+                                            <!-- Rellenado dinámicamente con JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="det-btn-completar" onclick="completarPedidoDesdeModal()">Completar Pedido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap 5 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts de la aplicación -->
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/pedidos.js"></script>
+</body>
+</html>
